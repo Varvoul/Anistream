@@ -1,0 +1,1014 @@
+---
+layout: null
+---
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Quravel - Homepage</title>
+    <meta name="algolia-site-verification" content="F6BCD1C35FCD1EB6" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#498BBB", 
+                        "background-light": "#F3F4F6",
+                        "background-dark": "#0B0E19",
+                        "surface-dark": "#151926",
+                        "footer-dark": "#0C0E14",
+                        "text-light": "#E5E7EB",
+                        "text-muted": "#9CA3AF"
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                    },
+                },
+            },
+        };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        #mobile-menu {
+            transition: transform 0.3s ease-in-out;
+        }
+        .menu-open {
+            transform: translateX(0) !important;
+        }
+        #hero-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            height: 100%;
+            width: 100%;
+        }
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+            flex-shrink: 0;
+        }
+        #search-suggestions, #mobile-search-suggestions {
+            max-height: 70vh;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #498BBB #151926;
+        }
+        #search-suggestions::-webkit-scrollbar,
+        #mobile-search-suggestions::-webkit-scrollbar {
+            width: 8px;
+        }
+        #search-suggestions::-webkit-scrollbar-track,
+        #mobile-search-suggestions::-webkit-scrollbar-track {
+            background: #151926;
+        }
+        #search-suggestions::-webkit-scrollbar-thumb,
+        #mobile-search-suggestions::-webkit-scrollbar-thumb {
+            background-color: #498BBB;
+            border-radius: 4px;
+        }
+        .dropdown-container:hover .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .dropdown-content {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.2s ease;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-gray-900 dark:text-text-light transition-colors duration-300 min-h-screen flex flex-col relative">
+
+    <!-- Mobile Menu Overlay -->
+    <div class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden" id="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
+    
+    <!-- Mobile Menu -->
+    <div class="fixed top-0 left-0 h-full w-64 bg-white dark:bg-[#151926] z-50 transform -translate-x-full lg:hidden overflow-y-auto shadow-2xl" id="mobile-menu">
+        <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+            <img alt="Quravel Logo" class="h-8 object-contain" src="https://cdn.imgchest.com/files/449aa5626e23.png"/>
+            <button class="text-gray-500 hover:text-primary" onclick="toggleMobileMenu()">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="p-4 space-y-4">
+            <a class="block text-sm font-medium hover:text-primary py-2 border-b border-gray-100 dark:border-gray-800" href="#">Home</a>
+            
+            <div class="py-2 border-b border-gray-100 dark:border-gray-800">
+                <button class="flex items-center justify-between w-full text-sm font-medium hover:text-primary focus:outline-none" onclick="toggleMobileDropdown('genre-mobile')">
+                    <span>Genre</span>
+                    <span class="material-symbols-outlined text-sm transform transition-transform" id="genre-arrow">expand_more</span>
+                </button>
+                <div class="hidden mt-2 ml-4 space-y-2 text-sm text-gray-500 dark:text-gray-400" id="genre-mobile">
+                    <a class="block hover:text-primary" href="#">Action</a>
+<a class="block hover:text-primary" href="#">Adventure</a>
+<a class="block hover:text-primary" href="#">Cars</a>
+<a class="block hover:text-primary" href="#">Comedy</a>
+<a class="block hover:text-primary" href="#">Dementia</a>
+<a class="block hover:text-primary" href="#">Demons</a>
+<a class="block hover:text-primary" href="#">Drama</a>
+<a class="block hover:text-primary" href="#">Ecchi</a>
+<a class="block hover:text-primary" href="#">Fantasy</a>
+<a class="block hover:text-primary" href="#">Game</a>
+<a class="block hover:text-primary" href="#">Harem</a>
+<a class="block hover:text-primary" href="#">Historical</a>
+<a class="block hover:text-primary" href="#">Horror</a>
+<a class="block hover:text-primary" href="#">Isekai</a>
+<a class="block hover:text-primary" href="#">Josei</a>
+<a class="block hover:text-primary" href="#">Kids</a>
+<a class="block hover:text-primary" href="#">Magic</a>
+<a class="block hover:text-primary" href="#">Martial Arts</a>
+<a class="block hover:text-primary" href="#">Mecha</a>
+<a class="block hover:text-primary" href="#">Military</a>
+<a class="block hover:text-primary" href="#">Music</a>
+<a class="block hover:text-primary" href="#">Mystery</a>
+<a class="block hover:text-primary" href="#">Noir</a>
+<a class="block hover:text-primary" href="#">Parody</a>
+<a class="block hover:text-primary" href="#">Police</a>
+<a class="block hover:text-primary" href="#">Psychological</a>
+<a class="block hover:text-primary" href="#">Politic</a>
+<a class="block hover:text-primary" href="#">Romance</a>
+<a class="block hover:text-primary" href="#">Reality-Show</a>
+<a class="block hover:text-primary" href="#">Reality-TV</a>
+<a class="block hover:text-primary" href="#">Samurai</a>
+<a class="block hover:text-primary" href="#">School</a>
+<a class="block hover:text-primary" href="#">Sci-Fi</a>
+<a class="block hover:text-primary" href="#">Seinen</a>
+<a class="block hover:text-primary" href="#">Shoujo</a>
+<a class="block hover:text-primary" href="#">Shoujo Ai</a>
+<a class="block hover:text-primary" href="#">Shounen</a>
+<a class="block hover:text-primary" href="#">Shounen Ai</a>
+<a class="block hover:text-primary" href="#">Slice of Life</a>
+<a class="block hover:text-primary" href="#">Space</a>
+<a class="block hover:text-primary" href="#">Sports</a>
+<a class="block hover:text-primary" href="#">Super Power</a>
+<a class="block hover:text-primary" href="#">Supernatural</a>
+<a class="block hover:text-primary" href="#">Thriller</a>
+<a class="block hover:text-primary" href="#">Vampire</a>
+<a class="block hover:text-primary" href="#">War</a>
+                </div>
+            </div>
+            
+            <div class="py-2 border-b border-gray-100 dark:border-gray-800">
+                <button class="flex items-center justify-between w-full text-sm font-medium hover:text-primary focus:outline-none" onclick="toggleMobileDropdown('country-mobile')">
+                    <span>Country</span>
+                    <span class="material-symbols-outlined text-sm transform transition-transform" id="country-arrow">expand_more</span>
+                </button>
+                <div class="hidden mt-2 ml-4 space-y-2 text-sm text-gray-500 dark:text-gray-400" id="country-mobile">
+                    <a class="block hover:text-primary" href="#">Argentina</a>
+<a class="block hover:text-primary" href="#">Australia</a>
+<a class="block hover:text-primary" href="#">Austria</a>
+<a class="block hover:text-primary" href="#">Bangladesh</a>
+<a class="block hover:text-primary" href="#">Belgium</a>
+<a class="block hover:text-primary" href="#">Brazil</a>
+<a class="block hover:text-primary" href="#">Canada</a>
+<a class="block hover:text-primary" href="#">Chile</a>
+<a class="block hover:text-primary" href="#">China</a>
+<a class="block hover:text-primary" href="#">Colombia</a>
+<a class="block hover:text-primary" href="#">Czechia</a>
+<a class="block hover:text-primary" href="#">Denmark</a>
+<a class="block hover:text-primary" href="#">Egypt</a>
+<a class="block hover:text-primary" href="#">Finland</a>
+<a class="block hover:text-primary" href="#">France</a>
+<a class="block hover:text-primary" href="#">Germany</a>
+<a class="block hover:text-primary" href="#">Greece</a>
+<a class="block hover:text-primary" href="#">Hong Kong</a>
+<a class="block hover:text-primary" href="#">Hungary</a>
+<a class="block hover:text-primary" href="#">Iceland</a>
+<a class="block hover:text-primary" href="#">India</a>
+<a class="block hover:text-primary" href="#">Indonesia</a>
+<a class="block hover:text-primary" href="#">Iran</a>
+<a class="block hover:text-primary" href="#">Ireland</a>
+<a class="block hover:text-primary" href="#">Israel</a>
+<a class="block hover:text-primary" href="#">Italy</a>
+<a class="block hover:text-primary" href="#">Japan</a>
+<a class="block hover:text-primary" href="#">Mexico</a>
+<a class="block hover:text-primary" href="#">Netherlands</a>
+<a class="block hover:text-primary" href="#">New Zealand</a>
+<a class="block hover:text-primary" href="#">Nigeria</a>
+<a class="block hover:text-primary" href="#">Pakistan</a>
+<a class="block hover:text-primary" href="#">Philippines</a>
+<a class="block hover:text-primary" href="#">Poland</a>
+<a class="block hover:text-primary" href="#">Russia</a>
+<a class="block hover:text-primary" href="#">South Africa</a>
+<a class="block hover:text-primary" href="#">Spain</a>
+<a class="block hover:text-primary" href="#">Sweden</a>
+<a class="block hover:text-primary" href="#">Taiwan</a>
+<a class="block hover:text-primary" href="#">Thailand</a>
+<a class="block hover:text-primary" href="#">Turkey</a>
+<a class="block hover:text-primary" href="#">UK</a>
+                </div>
+            </div>
+            
+            <a class="block text-sm font-medium hover:text-primary py-2 border-b border-gray-100 dark:border-gray-800" href="#">Top IMDB</a>
+            <a class="block text-sm font-medium hover:text-primary py-2 border-b border-gray-100 dark:border-gray-800" href="#">Updates</a>
+            <a class="block text-sm font-medium hover:text-primary py-2" href="https://editor.wix.com/wixel-view/forms/7405900275916997729">Sent request</a>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="fixed top-0 w-full z-40 bg-white/95 dark:bg-[#0B0E19]/95 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800 shadow-sm">
+        <div class="container mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <button class="lg:hidden text-gray-600 dark:text-gray-200 focus:outline-none" onclick="toggleMobileMenu()">
+                    <span class="material-symbols-outlined text-3xl">menu</span>
+                </button>
+                <nav class="hidden lg:flex items-center space-x-6 text-sm font-medium">
+                    <a class="hover:text-primary transition-colors text-primary" href="#">Home</a>
+                    
+                    <!-- Genre Dropdown -->
+                    <div class="relative group">
+                        <button class="flex items-center space-x-1 hover:text-primary transition-colors focus:outline-none py-4">
+                            <span>Genre</span>
+                            <span class="material-symbols-outlined text-sm">expand_more</span>
+                        </button>
+                        <div class="absolute top-full left-0 w-[600px] bg-white dark:bg-[#1A1D29] rounded-b-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 border-t-2 border-primary grid grid-cols-4 gap-4 p-6 z-50">
+                            <a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Adventure</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Adult</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Cars</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Comedy</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Dementia</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Demons</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Drama</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Ecchi</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Fantasy</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Game</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Harem</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Historical</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Horror</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Isekai</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Josei</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Kids</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Magic</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Martial Arts</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Mecha</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Military</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Music</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Mystery</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Parody</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Police</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Politic</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Psychological</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Romance</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Samurai</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">School</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Sci-Fi</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Seinen</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Shoujo</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Shoujo Ai</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Shounen</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Shounen Ai</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Slice of Life</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Space</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Sports</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Super Power</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Supernatural</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Thriller</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Vampire</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">War</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Country Dropdown -->
+                    <div class="relative group">
+                        <button class="flex items-center space-x-1 hover:text-primary transition-colors focus:outline-none py-4">
+                            <span>Country</span>
+                            <span class="material-symbols-outlined text-sm">expand_more</span>
+                        </button>
+                        <div class="absolute top-full left-0 w-[600px] bg-white dark:bg-[#1A1D29] rounded-b-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 border-t-2 border-primary grid grid-cols-4 gap-4 p-6 z-50">
+                            <a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Argentina</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Australia</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Austria</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Belgium</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Brazil</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Canada</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">China</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Colombia</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Czech Republic</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Denmark</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Finland</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">France</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Germany</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Hong Kong</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Hungary</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">India</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Ireland</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Israel</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Italy</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Japan</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Luxembourg</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Mexico</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Netherlands</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">New Zealand</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Nigeria</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Norway</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Philippines</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Poland</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Romania</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Russia</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">South Africa</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">South Korea</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Spain</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Sweden</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Switzerland</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Taiwan</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Thailand</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">Turkey</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">United Kingdom</a>
+<a class="hover:text-primary block text-sm text-gray-600 dark:text-gray-400" href="#">United States</a>
+                        </div>
+                    </div>
+                    
+                    <a class="hover:text-primary transition-colors" href="#">Top IMDB</a>
+                    <a class="hover:text-primary transition-colors" href="#">Updates</a>
+                    <a class="hover:text-primary transition-colors" href="https://editor.wix.com/wixel-view/forms/7405900275916997729">Sent request</a>
+                </nav>
+            </div>
+            
+            <div class="absolute left-1/2 transform -translate-x-1/2">
+                <a class="block" href="/">
+                    <img alt="Quravel Logo" class="h-8 md:h-10 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqLjw2b3zIJYAUXSR-0wnqCCSiHxBpWopeX4YkK91UxQUQErP8E3fBTKHGPMn44svm6TkV73RcFl8uZYm6unBNmb_F5B0XAtvw-yAnSKJzR-DIoMzoWA519xKDUhoH8DE4biRu7joxNso-Ui3U1pLkiOaL02GPgdP6zHD6BmF10aMv5toxV6-cghRon9fHKmJihBEYz21Rmh4zx3Kz6pm1xk_o-fcYhwfAxeV0fx3eRLBxYIrLqzBBjdbVn1H1B5RVpSEDH9EgFZ4"/>
+                </a>
+            </div>
+            
+            <div class="flex items-center space-x-4 relative">
+                <!-- Desktop Search -->
+                <div class="relative hidden sm:block">
+                    <input class="bg-gray-100 dark:bg-gray-800 text-sm rounded-full py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-primary w-48 transition-all dark:text-white border-none" 
+                           placeholder="Search..." type="text" id="main-search"/>
+                    <span class="material-symbols-outlined absolute right-3 top-2 text-gray-400 text-lg">search</span>
+                    
+                    <!-- Search Suggestions Dropdown -->
+                    <div id="search-suggestions" class="absolute hidden w-full mt-2 bg-surface-dark rounded-lg shadow-2xl z-50 overflow-hidden border border-gray-700">
+                        <div id="suggestions-list" class="max-h-96 overflow-y-auto"></div>
+                        <a href="/search" id="view-all-btn" class="block w-full text-center p-3 bg-primary text-white font-bold hover:bg-opacity-90">
+                            View All Results
+                        </a>
+                    </div>
+                </div>
+                <button class="sm:hidden text-gray-600 dark:text-gray-200" onclick="toggleMobileSearch()">
+                    <span class="material-symbols-outlined">search</span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Search Bar -->
+        <div class="hidden sm:hidden bg-white dark:bg-[#0B0E19] border-b border-gray-200 dark:border-gray-800 p-3 absolute w-full top-16 left-0 z-30" id="mobile-search-bar">
+            <div class="relative">
+                <input class="w-full bg-gray-100 dark:bg-gray-800 text-sm rounded-full py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-primary dark:text-white border-none" 
+                       placeholder="Search movies, shows..." type="text" id="mobile-search"/>
+                <span class="material-symbols-outlined absolute right-3 top-2 text-gray-400 text-lg">search</span>
+
+                <!-- Mobile Search Suggestions -->
+                <div id="mobile-search-suggestions" class="absolute hidden w-full mt-2 bg-surface-dark rounded-lg shadow-2xl z-50 overflow-hidden border border-gray-700">
+                    <div id="mobile-suggestions-list" class="max-h-80 overflow-y-auto"></div>
+                    <a href="/search" id="mobile-view-all-btn" class="block w-full text-center p-3 bg-primary text-white font-bold hover:bg-opacity-90">
+                        View All Results
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow pt-20 pb-12">
+        <!-- Hero Carousel with 11ty Loop -->
+        <div class="container mx-auto px-4 mb-12 relative h-[700px] w-full rounded-2xl overflow-hidden" id="hero-carousel">
+            <div class="flex h-full w-full transition-transform duration-500 ease-in-out" id="hero-track">
+                {% set heroItems = posts.posts | getHero %}
+                {% if heroItems.length > 0 %}
+                    {% for item in heroItems %}
+                    <div class="carousel-slide w-full h-full relative group">
+                        <img alt="{{ item.title }}" class="w-full h-full object-cover" src="{{ item.backdrop }}" onerror="this.src='https://via.placeholder.com/1920x700?text=Quravel'"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+                        <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-8 md:p-12 w-full md:w-2/3">
+                            <div class="flex items-center gap-2 text-xs md:text-sm text-gray-300 mb-2">
+                                {% if item.genres and item.genres.length > 0 %}
+                                <span class="text-primary font-semibold">{{ item.genres[0] }}</span>
+                                {% for genre in item.genres.slice(1, 3) %}
+                                <span>•</span>
+                                <span>{{ genre }}</span>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">{{ item.title }}</h2>
+                            <div class="flex items-center gap-3 text-xs md:text-sm text-white mb-4">
+                                <span class="bg-yellow-500 text-black px-1.5 py-0.5 rounded font-bold text-[10px]">IMDb {{ item.rating }}</span>
+                                <span class="border border-white/30 px-1.5 py-0.5 rounded text-[10px]">HD</span>
+                                {% if item.certification %}
+                                <span class="border border-white/30 px-1.5 py-0.5 rounded text-[10px]">{{ item.certification }}</span>
+                                {% endif %}
+                                <span>{{ item.duration }}</span>
+                                <span>{{ item.year }}</span>
+                            </div>
+                            <p class="text-gray-300 text-sm md:text-base line-clamp-3 mb-6 max-w-xl">
+                                {{ item.description | truncate(200) }}
+                            </p>
+                            <div class="flex items-center gap-4">
+                                <a href="{{ item.watchLink }}" target="_self">
+                                    <button class="bg-primary hover:bg-opacity-90 text-white font-semibold py-3 px-8 rounded-full flex items-center gap-2 transition-all shadow-lg shadow-primary/30 transform hover:-translate-y-0.5">
+                                        Watch Now <span class="material-symbols-outlined">play_circle</span>
+                                    </button>
+                                </a>
+                                <div class="relative dropdown-container">
+                                    <button class="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white w-12 h-12 rounded-full flex items-center justify-center transition-all border border-white/10 heart-btn" 
+                                            data-item-id="{{ item.id }}">
+                                        {% set savedStatus = getSavedStatus(item.id) %}
+                                        <span class="material-symbols-outlined">{{ savedStatus.icon }}</span>
+                                    </button>
+                                    <div class="dropdown-content absolute left-0 bottom-full mb-2 w-48 bg-surface-dark rounded-lg shadow-xl py-2 z-30 border border-gray-700 text-sm">
+                                        <button class="block w-full text-left px-4 py-2 hover:bg-gray-800 text-gray-300" onclick="saveToLocalStorage('{{ item.id }}', 'Planning to watch')">Planning to watch</button>
+                                        <button class="block w-full text-left px-4 py-2 hover:bg-gray-800 text-gray-300" onclick="saveToLocalStorage('{{ item.id }}', 'Watching')">Watching</button>
+                                        <button class="block w-full text-left px-4 py-2 hover:bg-gray-800 text-gray-300" onclick="saveToLocalStorage('{{ item.id }}', 'Completed')">Completed</button>
+                                        <button class="block w-full text-left px-4 py-2 hover:bg-gray-800 text-gray-300" onclick="saveToLocalStorage('{{ item.id }}', 'Favorites')">Add to Favorites</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute right-12 top-1/2 -translate-y-1/2 w-48 hidden lg:block shadow-2xl rounded-lg overflow-hidden border border-white/10">
+                            <img alt="{{ item.title }} Poster" class="w-full h-full object-cover" src="{{ item.poster }}" onerror="this.src='https://via.placeholder.com/200x300?text=Poster'"/>
+                            <div class="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-sm p-2 text-center">
+                                <span class="text-white text-xs font-bold font-mono tracking-widest uppercase">{{ item.title | truncate(15) }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <!-- Fallback if no hero items -->
+                    <div class="carousel-slide w-full h-full relative group">
+                        <img alt="Default Hero" class="w-full h-full object-cover" src="https://image.tmdb.org/t/p/original/gqTz24ZRsCP6AKjARmEivY7m0cK.jpg"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+                        <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-8 md:p-12 w-full md:w-2/3">
+                            <div class="flex items-center gap-2 text-xs md:text-sm text-gray-300 mb-2">
+                                <span class="text-primary font-semibold">Action</span>
+                                <span>•</span>
+                                <span>Adventure</span>
+                                <span>•</span>
+                                <span>Fantasy</span>
+                            </div>
+                            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">Welcome to Quravel</h2>
+                            <p class="text-gray-300 text-sm md:text-base line-clamp-3 mb-6 max-w-xl">
+                                Discover the best movies, TV shows, and anime all in one place. Stream for free in HD quality.
+                            </p>
+                            <div class="flex items-center gap-4">
+                                <button class="bg-primary hover:bg-opacity-90 text-white font-semibold py-3 px-8 rounded-full flex items-center gap-2 transition-all shadow-lg shadow-primary/30 transform hover:-translate-y-0.5">
+                                    Start Exploring <span class="material-symbols-outlined">play_circle</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="absolute bottom-8 right-8 flex items-center gap-4 z-30">
+                <span class="text-white font-mono text-sm"><span id="current-slide-display">1</span> <span class="text-gray-500">/ {{ heroItems.length or 1 }}</span></span>
+                <div class="flex gap-2">
+                    <button class="bg-white/10 hover:bg-white/20 backdrop-blur-md p-2 rounded text-white transition-colors border border-white/10" onclick="changeSlide(-1)">
+                        <span class="material-symbols-outlined text-sm">arrow_back</span>
+                    </button>
+                    <button class="bg-white/10 hover:bg-white/20 backdrop-blur-md p-2 rounded text-white transition-colors border border-white/10" onclick="changeSlide(1)">
+                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Airing Section -->
+        <section class="container mx-auto px-4 mb-12">
+            <div class="flex justify-between items-end mb-6 border-b border-gray-200 dark:border-gray-800 pb-2">
+                <h2 class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white border-l-4 border-primary pl-4">Top Airing</h2>
+                <div class="flex items-center gap-4">
+                    <div class="hidden md:flex gap-2">
+                        <button class="bg-gray-200 dark:bg-gray-800 p-1 rounded-full hover:text-primary transition-colors" onclick="scrollSection('top-airing-scroll', -500)">
+                            <span class="material-symbols-outlined">chevron_left</span>
+                        </button>
+                        <button class="bg-gray-200 dark:bg-gray-800 p-1 rounded-full hover:text-primary transition-colors" onclick="scrollSection('top-airing-scroll', 500)">
+                            <span class="material-symbols-outlined">chevron_right</span>
+                        </button>
+                    </div>
+                    <a class="text-sm text-gray-500 dark:text-gray-400 hover:text-primary flex items-center gap-1 transition-colors group" href="#">
+                        View all <span class="material-symbols-outlined text-base transform group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+            <div class="flex overflow-x-auto gap-4 pb-4 hide-scrollbar scroll-smooth" id="top-airing-scroll">
+                {% set topAiring = posts.posts | getTopAiring %}
+                {% if topAiring.length > 0 %}
+                    {% for item in topAiring.slice(0, 12) %}
+                    <a href="{{ item.watchLink }}" class="flex-shrink-0 w-40 sm:w-48 group snap-start bg-white dark:bg-surface-dark rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
+                        <div class="aspect-[2/3] relative overflow-hidden">
+                            <img src="{{ item.poster }}" alt="{{ item.title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.src='https://via.placeholder.com/200x300?text=Poster'">
+                            <div class="absolute top-2 right-2 bg-primary/90 text-white text-[10px] font-bold px-2 py-0.5 rounded backdrop-blur-sm">HD</div>
+                            <div class="absolute bottom-2 left-2 bg-black/60 text-white text-[10px] font-bold px-2 py-0.5 rounded backdrop-blur-sm flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[10px]">star</span> {{ item.rating }}
+                            </div>
+                            <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                <div class="bg-primary text-white rounded-full p-3 shadow-lg transform scale-0 group-hover:scale-100 transition-transform duration-300">
+                                    <span class="material-symbols-outlined text-2xl">play_arrow</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-gray-900 dark:text-white line-clamp-1 group-hover:text-primary transition-colors mb-2">{{ item.title }}</h3>
+                            <div class="flex justify-between items-center text-xs text-gray-500 dark:text-gray-400">
+                                <span>{{ item.year }}</span>
+                                <span class="truncate max-w-[80px]">{{ item.type | capitalize }}</span>
+                                <span>{{ item.duration }}</span>
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                {% else %}
+                    <div class="w-full text-center py-12 text-gray-500">
+                        No top airing content available
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+
+        <!-- Latest Movies Section -->
+        <section class="container mx-auto px-4 mb-12">
+            <div class="flex justify-between items-end mb-6 border-b border-gray-200 dark:border-gray-800 pb-2">
+                <h2 class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white border-l-4 border-primary pl-4">Latest Movies</h2>
+                <div class="flex items-center gap-4">
+                    <div class="hidden md:flex gap-2">
+                        <button class="bg-gray-200 dark:bg-gray-800 p-1 rounded-full hover:text-primary transition-colors" onclick="scrollSection('latest-movies-scroll', -500)">
+                            <span class="material-symbols-outlined">chevron_left</span>
+                        </button>
+                        <button class="bg-gray-200 dark:bg-gray-800 p-1 rounded-full hover:text-primary transition-colors" onclick="scrollSection('latest-movies-scroll', 500)">
+                            <span class="material-symbols-outlined">chevron_right</span>
+                        </button>
+                    </div>
+                    <a class="text-sm text-gray-500 dark:text-gray-400 hover:text-primary flex items-center gap-1 transition-colors group" href="#">
+                        View all <span class="material-symbols-outlined text-base transform group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+            <div class="flex overflow-x-auto gap-4 pb-4 hide-scrollbar scroll-smooth" id="latest-movies-scroll">
+                {% set latestMovies = posts.posts | filterByType("movie") | sortLatest %}
+                {% if latestMovies.length > 0 %}
+                    {% for item in latestMovies.slice(0, 15) %}
+                    <a href="{{ item.watchLink }}" class="flex-shrink-0 w-40 sm:w-48 group snap-start bg-white dark:bg-surface-dark rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
+                        <div class="aspect-[2/3] relative overflow-hidden">
+                            <img src="{{ item.poster }}" alt="{{ item.title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.src='https://via.placeholder.com/200x300?text=Poster'">
+                            <div class="absolute top-2 right-2 bg-primary/90 text-white text-[10px] font-bold px-2 py-0.5 rounded backdrop-blur-sm">HD</div>
+                            <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                <div class="bg-primary text-white rounded-full p-3 shadow-lg transform scale-0 group-hover:scale-100 transition-transform duration-300">
+                                    <span class="material-symbols-outlined text-2xl">play_arrow</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-gray-900 dark:text-white line-clamp-1 group-hover:text-primary transition-colors mb-2">{{ item.title }}</h3>
+                            <div class="flex justify-between items-center text-xs text-gray-500 dark:text-gray-400">
+                                <span>{{ item.year }}</span>
+                                <span class="truncate">Movie</span>
+                                <span>{{ item.duration }}</span>
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                {% else %}
+                    <div class="w-full text-center py-12 text-gray-500">
+                        No movies available
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+
+        <!-- Latest TV Shows Section -->
+        <section class="container mx-auto px-4 mb-12">
+            <div class="flex justify-between items-end mb-6 border-b border-gray-200 dark:border-gray-800 pb-2">
+                <h2 class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white border-l-4 border-primary pl-4">Latest TV Shows</h2>
+                <div class="flex items-center gap-4">
+                    <div class="hidden md:flex gap-2">
+                        <button class="bg-gray-200 dark:bg-gray-800 p-1 rounded-full hover:text-primary transition-colors" onclick="scrollSection('tv-shows-scroll', -500)">
+                            <span class="material-symbols-outlined">chevron_left</span>
+                        </button>
+                        <button class="bg-gray-200 dark:bg-gray-800 p-1 rounded-full hover:text-primary transition-colors" onclick="scrollSection('tv-shows-scroll', 500)">
+                            <span class="material-symbols-outlined">chevron_right</span>
+                        </button>
+                    </div>
+                    <a class="text-sm text-gray-500 dark:text-gray-400 hover:text-primary flex items-center gap-1 transition-colors group" href="#">
+                        View all <span class="material-symbols-outlined text-base transform group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+            <div class="flex overflow-x-auto gap-4 pb-4 hide-scrollbar scroll-smooth" id="tv-shows-scroll">
+                {% set tvShows = posts.posts | filterByType("tv") | sortLatest %}
+                {% if tvShows.length > 0 %}
+                    {% for item in tvShows.slice(0, 12) %}
+                    <a href="{{ item.watchLink }}" class="flex-shrink-0 w-40 sm:w-48 group snap-start bg-white dark:bg-surface-dark rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
+                        <div class="aspect-[2/3] relative overflow-hidden">
+                            <img src="{{ item.poster }}" alt="{{ item.title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.src='https://via.placeholder.com/200x300?text=Poster'">
+                            <div class="absolute top-2 right-2 bg-primary/90 text-white text-[10px] font-bold px-2 py-0.5 rounded backdrop-blur-sm">HD</div>
+                            <div class="absolute bottom-2 left-2 bg-black/60 text-white text-[10px] font-bold px-2 py-0.5 rounded backdrop-blur-sm flex items-center gap-1">
+                                {% if item.episodes %}Eps {{ item.episodes }}{% else %}Ongoing{% endif %}
+                            </div>
+                            <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                <div class="bg-primary text-white rounded-full p-3 shadow-lg transform scale-0 group-hover:scale-100 transition-transform duration-300">
+                                    <span class="material-symbols-outlined text-2xl">play_arrow</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-gray-900 dark:text-white line-clamp-1 group-hover:text-primary transition-colors mb-2">{{ item.title }}</h3>
+                            <div class="flex justify-between items-center text-xs text-gray-500 dark:text-gray-400">
+                                <span>{{ item.year }}</span>
+                                <span class="truncate max-w-[80px]">TV Show</span>
+                                <span>SS {{ item.seasons or 1 }}</span>
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                {% else %}
+                    <div class="w-full text-center py-12 text-gray-500">
+                        No TV shows available
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+
+        <!-- Latest Anime Section -->
+        <section class="container mx-auto px-4 mb-12">
+            <div class="flex justify-between items-end mb-6 border-b border-gray-200 dark:border-gray-800 pb-2">
+                <h2 class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white border-l-4 border-primary pl-4">Latest Anime</h2>
+                <div class="flex items-center gap-4">
+                    <div class="hidden md:flex gap-2">
+                        <button class="bg-gray-200 dark:bg-gray-800 p-1 rounded-full hover:text-primary transition-colors" onclick="scrollSection('anime-scroll', -500)">
+                            <span class="material-symbols-outlined">chevron_left</span>
+                        </button>
+                        <button class="bg-gray-200 dark:bg-gray-800 p-1 rounded-full hover:text-primary transition-colors" onclick="scrollSection('anime-scroll', 500)">
+                            <span class="material-symbols-outlined">chevron_right</span>
+                        </button>
+                    </div>
+                    <a class="text-sm text-gray-500 dark:text-gray-400 hover:text-primary flex items-center gap-1 transition-colors group" href="#">
+                        View all <span class="material-symbols-outlined text-base transform group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+            <div class="flex overflow-x-auto gap-4 pb-4 hide-scrollbar scroll-smooth" id="anime-scroll">
+                {% set anime = posts.posts | filterByType("anime") | sortLatest %}
+                {% if anime.length > 0 %}
+                    {% for item in anime.slice(0, 12) %}
+                    <a href="{{ item.watchLink }}" class="flex-shrink-0 w-40 sm:w-48 group snap-start bg-white dark:bg-surface-dark rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
+                        <div class="aspect-[2/3] relative overflow-hidden">
+                            <img src="{{ item.poster }}" alt="{{ item.title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.src='https://via.placeholder.com/200x300?text=Poster'">
+                            <div class="absolute top-2 right-2 bg-primary/90 text-white text-[10px] font-bold px-2 py-0.5 rounded backdrop-blur-sm">HD</div>
+                            <div class="absolute bottom-2 left-2 bg-black/60 text-white text-[10px] font-bold px-2 py-0.5 rounded backdrop-blur-sm flex items-center gap-1">
+                                {% if item.episodes %}Eps {{ item.episodes }}{% else %}Ongoing{% endif %}
+                            </div>
+                            <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                <div class="bg-primary text-white rounded-full p-3 shadow-lg transform scale-0 group-hover:scale-100 transition-transform duration-300">
+                                    <span class="material-symbols-outlined text-2xl">play_arrow</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-gray-900 dark:text-white line-clamp-1 group-hover:text-primary transition-colors mb-2">{{ item.title }}</h3>
+                            <div class="flex justify-between items-center text-xs text-gray-500 dark:text-gray-400">
+                                <span>{{ item.year }}</span>
+                                <span class="truncate max-w-[80px]">Anime</span>
+                                <span>{% if item.seasons %}SS {{ item.seasons }}{% else %}Ongoing{% endif %}</span>
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                {% else %}
+                    <div class="w-full text-center py-12 text-gray-500">
+                        No anime available
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+
+        <!-- Recommended Section -->
+        <section class="container mx-auto px-4 mb-12">
+            <div class="flex justify-between items-end mb-6 border-b border-gray-200 dark:border-gray-800 pb-2">
+                <h2 class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white border-l-4 border-primary pl-4">Recommended</h2>
+                <div class="flex items-center gap-4">
+                    <div class="hidden md:flex gap-2">
+                        <button class="bg-gray-200 dark:bg-gray-800 p-1 rounded-full hover:text-primary transition-colors" onclick="scrollSection('recommended-scroll', -500)">
+                            <span class="material-symbols-outlined">chevron_left</span>
+                        </button>
+                        <button class="bg-gray-200 dark:bg-gray-800 p-1 rounded-full hover:text-primary transition-colors" onclick="scrollSection('recommended-scroll', 500)">
+                            <span class="material-symbols-outlined">chevron_right</span>
+                        </button>
+                    </div>
+                    <a class="text-sm text-gray-500 dark:text-gray-400 hover:text-primary flex items-center gap-1 transition-colors group" href="#">
+                        View all <span class="material-symbols-outlined text-base transform group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+            <div class="flex overflow-x-auto gap-4 pb-4 hide-scrollbar scroll-smooth" id="recommended-scroll">
+                {% set recommended = posts.posts | getRecommended %}
+                {% if recommended.length > 0 %}
+                    {% for item in recommended.slice(0, 12) %}
+                    <a href="{{ item.watchLink }}" class="flex-shrink-0 w-40 sm:w-48 group snap-start bg-white dark:bg-surface-dark rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
+                        <div class="aspect-[2/3] relative overflow-hidden">
+                            <img src="{{ item.poster }}" alt="{{ item.title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.src='https://via.placeholder.com/200x300?text=Poster'">
+                            <div class="absolute top-2 right-2 bg-primary/90 text-white text-[10px] font-bold px-2 py-0.5 rounded backdrop-blur-sm">HD</div>
+                            <div class="absolute bottom-2 left-2 bg-black/60 text-white text-[10px] font-bold px-2 py-0.5 rounded backdrop-blur-sm flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[10px]">star</span> {{ item.rating }}
+                            </div>
+                            <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                <div class="bg-primary text-white rounded-full p-3 shadow-lg transform scale-0 group-hover:scale-100 transition-transform duration-300">
+                                    <span class="material-symbols-outlined text-2xl">play_arrow</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-gray-900 dark:text-white line-clamp-1 group-hover:text-primary transition-colors mb-2">{{ item.title }}</h3>
+                            <div class="flex justify-between items-center text-xs text-gray-500 dark:text-gray-400">
+                                <span>{{ item.year }}</span>
+                                <span class="truncate max-w-[80px]">{{ item.type | capitalize }}</span>
+                                <span>{{ item.duration }}</span>
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                {% else %}
+                    <div class="w-full text-center py-12 text-gray-500">
+                        No recommendations available
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-white dark:bg-footer-dark border-t border-gray-200 dark:border-gray-800 mt-auto">
+        <div class="container mx-auto px-4 py-8 md:py-12">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                <div class="flex-1 max-w-2xl">
+                    <img alt="Quravel Logo" class="h-8 mb-4" src="https://cdn.imgchest.com/files/24d391d36c86.png"/>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
+                        Quravel offers free, ad-free access to top movies and series in stunning quality. Stream effortlessly or save for later with easy downloads, perfect for movie lovers on the go!
+                    </p>
+                    <p class="text-xs text-gray-500 dark:text-gray-500">
+                        This site does not store any files on our server, we only linked to the media which is hosted on 3rd party services.
+                        <br/>
+                        watch free movies, watch free tv shows, free animes online
+                    </p>
+                </div>
+                <div class="flex flex-col items-center md:items-end gap-2 w-full md:w-auto">
+                    <div class="flex gap-4 text-sm font-semibold text-gray-700 dark:text-gray-300">
+                        <a class="hover:text-primary transition-colors" href="https://editor.wix.com/wixel-view/forms/7405879446906864641">REQUEST</a>
+                        <a class="hover:text-primary transition-colors" href="https://editor.wix.com/wixel-view/forms/7405900275916997729">CONTACT</a>
+                    </div>
+                    <div class="text-xs text-gray-500 dark:text-gray-500 mt-2 text-center md:text-right w-full">
+                        <span class="text-primary font-bold">Quravel</span>
+                        <br/>
+                        @ 2025 Quravel
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const overlay = document.getElementById('mobile-menu-overlay');
+            menu.classList.toggle('menu-open');
+            overlay.classList.toggle('hidden');
+        }
+        
+        // Mobile Search Toggle
+        function toggleMobileSearch() {
+            const searchBar = document.getElementById('mobile-search-bar');
+            searchBar.classList.toggle('hidden');
+        }
+        
+        // Mobile Dropdown Accordion
+        function toggleMobileDropdown(id) {
+            const dropdown = document.getElementById(id);
+            dropdown.classList.toggle('hidden');
+            const arrowId = id === 'genre-mobile' ? 'genre-arrow' : 'country-arrow';
+            const arrow = document.getElementById(arrowId);
+            if (dropdown.classList.contains('hidden')) {
+                arrow.style.transform = 'rotate(0deg)';
+            } else {
+                arrow.style.transform = 'rotate(180deg)';
+            }
+        }
+        
+        // Hero Carousel Logic
+        let currentSlide = 0;
+        const heroTrack = document.getElementById('hero-track');
+        const slides = document.querySelectorAll('.carousel-slide');
+        
+        function changeSlide(direction) {
+            const totalSlides = slides.length;
+            if (totalSlides === 0) return;
+            
+            currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+            heroTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            const slideCounterDisplay = document.getElementById('current-slide-display');
+            if(slideCounterDisplay) slideCounterDisplay.innerText = currentSlide + 1;
+        }
+        
+        // Auto-advance slideshow every 5 seconds
+        let slideInterval = setInterval(() => {
+            changeSlide(1);
+        }, 5000);
+        
+        // Pause auto-slide on hover
+        heroTrack.addEventListener('mouseenter', () => clearInterval(slideInterval));
+        heroTrack.addEventListener('mouseleave', () => {
+            slideInterval = setInterval(() => changeSlide(1), 5000);
+        });
+        
+        // Section scrolling
+        function scrollSection(sectionId, amount) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollLeft += amount;
+            }
+        }
+        
+        // Local Storage for Heart Icons
+        function getSavedStatus(itemId) {
+            const saved = localStorage.getItem(`quravel_${itemId}`);
+            if (!saved) return { status: 'none', icon: 'favorite' };
+            
+            if (saved === 'Favorites') return { status: saved, icon: 'favorite' };
+            return { status: saved, icon: 'bookmark' };
+        }
+        
+        function saveToLocalStorage(itemId, status) {
+            localStorage.setItem(`quravel_${itemId}`, status);
+            
+            // Update the heart icon
+            const heartBtn = document.querySelector(`.heart-btn[data-item-id="${itemId}"]`);
+            if (heartBtn) {
+                const icon = heartBtn.querySelector('span');
+                if (status === 'Favorites') {
+                    icon.textContent = 'favorite';
+                    icon.style.color = '#ef4444'; // Red color for favorites
+                } else {
+                    icon.textContent = 'bookmark';
+                    icon.style.color = '#498BBB'; // Primary color for others
+                }
+                
+                // Show feedback
+                const originalText = icon.textContent;
+                icon.textContent = 'check';
+                icon.style.color = '#10b981';
+                setTimeout(() => {
+                    icon.textContent = originalText;
+                    icon.style.color = status === 'Favorites' ? '#ef4444' : '#498BBB';
+                }, 1000);
+            }
+            
+            console.log(`Saved ${itemId} as: ${status}`);
+        }
+        
+        // Initialize heart icons on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.heart-btn').forEach(btn => {
+                const itemId = btn.getAttribute('data-item-id');
+                const status = getSavedStatus(itemId);
+                const icon = btn.querySelector('span');
+                icon.textContent = status.icon;
+                if (status.status === 'Favorites') {
+                    icon.style.color = '#ef4444';
+                } else if (status.status !== 'none') {
+                    icon.style.color = '#498BBB';
+                }
+            });
+        });
+        
+        // Search functionality
+        let searchData = [];
+        
+        // Load search data from posts
+        document.addEventListener('DOMContentLoaded', () => {
+            // Convert 11ty posts to search data
+            const posts = {% if posts.posts %}{{ posts.posts | dump | safe }}{% else %}[]{% endif %};
+            searchData = posts.map(post => ({
+                id: post.id,
+                title: post.title,
+                type: post.type,
+                year: post.year,
+                rating: post.rating,
+                duration: post.duration,
+                genres: post.genres || [],
+                poster: post.poster,
+                watchLink: post.watchLink
+            }));
+            
+            // Setup search for desktop
+            const desktopSearch = document.getElementById('main-search');
+            const desktopSuggestions = document.getElementById('search-suggestions');
+            const desktopList = document.getElementById('suggestions-list');
+            
+            if(desktopSearch) {
+                desktopSearch.addEventListener('input', (e) => handleSearchInput(e, desktopList, desktopSuggestions, 'desktop'));
+                desktopSearch.addEventListener('focus', () => {
+                    if(desktopSearch.value.length >= 2) {
+                        desktopSuggestions.classList.remove('hidden');
+                    }
+                });
+            }
+            
+            // Setup search for mobile
+            const mobileSearch = document.getElementById('mobile-search');
+            const mobileSuggestions = document.getElementById('mobile-search-suggestions');
+            const mobileList = document.getElementById('mobile-suggestions-list');
+            
+            if(mobileSearch) {
+                mobileSearch.addEventListener('input', (e) => handleSearchInput(e, mobileList, mobileSuggestions, 'mobile'));
+                mobileSearch.addEventListener('focus', () => {
+                    if(mobileSearch.value.length >= 2) {
+                        mobileSuggestions.classList.remove('hidden');
+                    }
+                });
+            }
+            
+            // Close suggestions when clicking outside
+            document.addEventListener('click', (e) => {
+                if(desktopSearch && !desktopSearch.contains(e.target) && desktopSuggestions && !desktopSuggestions.contains(e.target)) {
+                    desktopSuggestions.classList.add('hidden');
+                }
+                if(mobileSearch && !mobileSearch.contains(e.target) && mobileSuggestions && !mobileSuggestions.contains(e.target)) {
+                    mobileSuggestions.classList.add('hidden');
+                }
+            });
+        });
+        
+        function handleSearchInput(e, listElement, suggestionsElement, type) {
+            const val = e.target.value.trim();
+            
+            if (val.length < 2) {
+                suggestionsElement.classList.add('hidden');
+                return;
+            }
+
+            // Update the "View All Results" button URL
+            const viewAllBtn = type === 'desktop' 
+                ? document.getElementById('view-all-btn') 
+                : document.getElementById('mobile-view-all-btn');
+            
+            if (viewAllBtn) {
+                viewAllBtn.href = `/search/?q=${encodeURIComponent(val)}`;
+            }
+
+            const searchVal = val.toLowerCase();
+            const results = searchData.filter(m => {
+                if (!m || !m.title) return false;
+                return m.title.toLowerCase().includes(searchVal) || 
+                       (m.genres && m.genres.some(g => g && g.toLowerCase().includes(searchVal)));
+            }).slice(0, 8);
+            
+            if(results.length === 0) {
+                listElement.innerHTML = `
+                    <div class="p-4 text-center text-gray-400">
+                        No results found for "${val}"
+                    </div>
+                `;
+                suggestionsElement.classList.remove('hidden');
+                return;
+            }
+            
+            listElement.innerHTML = results.map(m => `
+                <a href="${m.watchLink || '#'}" class="flex items-center p-3 hover:bg-gray-800 cursor-pointer border-b border-gray-700">
+                    <img src="${m.poster}" class="w-12 h-16 object-cover rounded mr-4" alt="${m.title}" onerror="this.src='https://via.placeholder.com/48x64?text=No+Image'">
+                    <div class="flex-1 min-w-0">
+                        <div class="font-semibold text-white truncate">${m.title}</div>
+                        <div class="text-xs text-gray-400 mt-1">
+                            ${m.type ? m.type.toUpperCase() : 'MOVIE'} • 
+                            ${m.genres ? m.genres.slice(0, 2).join(', ') : 'N/A'} • 
+                            ${m.year || 'N/A'} • 
+                            ${m.duration || 'N/A'}
+                        </div>
+                    </div>
+                    <span class="material-symbols-outlined text-gray-600 text-sm">chevron_right</span>
+                </a>
+            `).join('');
+            
+            suggestionsElement.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
