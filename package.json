@@ -1,0 +1,16 @@
+{
+  "name": "quravel-streaming",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "eleventy",
+    "dev": "eleventy --serve",
+    "clean": "rm -rf _site"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0",
+    "slugify": "^1.6.6"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
