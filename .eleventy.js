@@ -96,16 +96,16 @@ module.exports = function(eleventyConfig) {
     }
   });
 
-  // FIX THIS: Change from shortcode to filter
+  // FIXED: Robust Slugify Filter (matches JavaScript in search.njk)
   eleventyConfig.addFilter("slugify", function(str) {
     if (!str) return '';
     return str
-      .toLowerCase()
-      .replace(/\s+/g, '-')
-      .replace(/[^\w\-]+/g, '')
-      .replace(/\-\-+/g, '-')
-      .replace(/^-+/, '')
-      .replace(/-+$/, '');
+      .toLowerCase()                  // Convert to lowercase
+      .replace(/\s+/g, '-')           // Replace spaces with -
+      .replace(/[^\w\-]+/g, '')       // Remove all non-word chars (fixes :, !, etc.)
+      .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+      .replace(/^-+/, '')             // Trim - from start
+      .replace(/-+$/, '');            // Trim - from end
   });
 
   // Add collection for all posts
