@@ -26,7 +26,7 @@ permalink: /search/index.html
 <body class="bg-background-dark text-text-light">
 
     <nav class="p-6 border-b border-gray-800 flex justify-between items-center">
-        <a href="https://cdn.imgchest.com/files/d367abae3732.png" class="text-2xl font-bold text-primary">QURAVEL</a>
+        <a href="/" class="text-2xl font-bold text-primary">QURAVEL</a>
         <div class="flex-1 max-w-md mx-10">
             <input type="text" id="search-page-input" placeholder="Search again..." 
                    class="w-full bg-surface-dark border border-gray-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-primary outline-none">
@@ -81,7 +81,7 @@ permalink: /search/index.html
             displayResults(filtered);
         }
 
-        // 3. Render Results
+        // 3. Render Results with matching slugify logic
         function displayResults(movies) {
             countDisplay.innerText = `Found ${movies.length} results`;
             
