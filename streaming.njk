@@ -2,15 +2,10 @@
 pagination:
   data: posts.posts
   size: 1
-  alias: showData
-permalink: "watch/{{ showData.title | slugify }}/"
+  alias: post
+permalink: "watch/{{ post.title | slugify }}/"
 eleventyComputed:
-  title: "{{ showData.title }} - Watch Free on Quravel"
-  description: "{{ showData.description | default('Watch ' + showData.title + ' online for free on Quravel. HD streaming with multiple servers available.') }}"
-  ogImage: "{{ showData.poster }}"
-  ogType: "video.tv_show"
-  twitterCard: "summary_large_image"
-  canonical: "https://quravel.com/watch/{{ showData.title | slugify }}/"
+  title: "Watch {{ post.title }} - Quravel"
 ---
 <!DOCTYPE html>
 <html class="dark" lang="en"><head>
@@ -445,7 +440,7 @@ eleventyComputed:
 </header>
 <main class="flex-grow pt-16 pb-24 lg:pb-12 bg-[#0B0E14]">
 <!-- 11ty Template Integration Start -->
-{% if showData %}
+{% if post %}
 <div class="container mx-auto px-4 lg:px-0">
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 player-container">
         <!-- Left Column - Video Player (Top Center) -->
@@ -462,22 +457,22 @@ eleventyComputed:
             </div>
             
             <!-- Movie Content (if type is movie) -->
-            {% if showData.type == 'movie' %}
+            {% if post.type == 'movie' %}
             <div class="mt-8 bg-surface-dark rounded-xl p-6">
                 <div class="flex items-center justify-between mb-4">
-                    <h2 class="text-xl font-bold text-white">{{ showData.title }}</h2>
+                    <h2 class="text-xl font-bold text-white">{{ post.title }}</h2>
                     <span class="text-[10px] bg-primary/20 text-primary px-2 py-0.5 rounded uppercase tracking-widest font-bold">
-                        {{ showData.status | default('HD') }}
+                        {{ post.status | default('HD') }}
                     </span>
                 </div>
                 <div class="flex flex-wrap gap-2 mb-4">
-                    {% if showData.genres %}
-                        {% for genre in showData.genres %}
+                    {% if post.genres %}
+                        {% for genre in post.genres %}
                         <span class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded">{{ genre }}</span>
                         {% endfor %}
                     {% endif %}
                 </div>
-                <p class="text-gray-300 text-sm">{{ showData.description | default('No description available.') }}</p>
+                <p class="text-gray-300 text-sm">{{ post.description | default('No description available.') }}</p>
             </div>
             {% endif %}
         </div>
@@ -485,21 +480,21 @@ eleventyComputed:
         <!-- Right Column - Episodes/Seasons -->
         <div class="space-y-8">
             <!-- Episodes Section -->
-            {% if showData.type == 'series' %}
+            {% if post.type == 'series' %}
             <div class="bg-surface-dark rounded-xl p-4 md:p-6 border border-gray-800">
                 <div class="flex items-center justify-between mb-4">
                     <h2 class="text-lg font-bold text-white">Episodes</h2>
                     <span class="text-[10px] bg-primary/20 text-primary px-2 py-0.5 rounded uppercase tracking-widest font-bold">
-                        {{ showData.status | default('Ongoing') }}
+                        {{ post.status | default('Ongoing') }}
                     </span>
                 </div>
 
-                {% if showData.seasons and showData.seasons.length > 1 %}
+                {% if post.seasons and post.seasons.length > 1 %}
                 <div class="mb-4">
                     <div class="relative">
                         <select id="season-select" onchange="changeSeason(this.value)" 
                                 class="w-full bg-background-dark border border-gray-700 rounded-lg py-2.5 px-4 text-sm text-white appearance-none focus:border-primary outline-none transition-colors">
-                            {% for season in showData.seasons %}
+                            {% for season in post.seasons %}
                                 <option value="{{ loop.index0 }}">Season {{ season.seasonNumber }}</option>
                             {% endfor %}
                         </select>
@@ -594,7 +589,7 @@ eleventyComputed:
     </div>
 
     <!-- Additional Content (Comments, Rating, etc.) -->
-    {% if showData.type == 'series' %}
+    {% if post.type == 'series' %}
     <div class="mt-8 border-t border-gray-800 pt-8">
         <div class="flex items-center justify-between mb-6">
             <div class="flex items-center gap-4">
@@ -623,20 +618,20 @@ eleventyComputed:
 
 <script>
     // This data comes from your posts.json via 11ty
-    const showData = {{ showData | dump | safe }};
+    const post = {{ post | dump | safe }};
     let currentSeasonIdx = 0; // Default to the first season
     let currentServer = 'sub';
     let currentEpisodeIdx = 0;
 
     function initStreaming() {
         // If it's a series, render the first season's episodes
-        if (showData.type === 'series' && showData.seasons && showData.seasons.length > 0) {
+        if (post.type === 'series' && post.seasons && post.seasons.length > 0) {
             renderEpisodes(currentSeasonIdx);
-            if (showData.seasons.length === 1) {
+            if (post.seasons.length === 1) {
                 // Hide season selector if only one season
                 document.getElementById('season-select')?.parentElement?.classList.add('hidden');
             }
-        } else if (showData.type === 'movie') {
+        } else if (post.type === 'movie') {
             // Just load the movie link directly
             loadMovie();
         }
@@ -648,7 +643,7 @@ eleventyComputed:
         const container = document.getElementById('episode-container');
         if (!container) return;
         
-        const episodes = showData.seasons[sIdx].episodes;
+        const episodes = post.seasons[sIdx].episodes;
         
         container.innerHTML = episodes.map(ep => `
             <button onclick="playEpisode(${ep.number - 1})" class="w-full flex items-center p-3 rounded-lg bg-background-dark/50 hover:bg-primary/10 border border-gray-800 hover:border-primary/30 transition-all text-left group">
@@ -691,14 +686,14 @@ eleventyComputed:
         const player = document.getElementById('main-player');
         if (!player) return;
         
-        if (showData.type === 'movie') {
+        if (post.type === 'movie') {
             // Load movie URL
-            const movieUrl = showData.movieUrl || showData.servers?.sub || '';
+            const movieUrl = post.movieUrl || post.servers?.sub || '';
             if (movieUrl) {
                 player.src = movieUrl;
             }
-        } else if (showData.type === 'series' && showData.seasons[currentSeasonIdx]) {
-            const season = showData.seasons[currentSeasonIdx];
+        } else if (post.type === 'series' && post.seasons[currentSeasonIdx]) {
+            const season = post.seasons[currentSeasonIdx];
             const episode = season.episodes[currentEpisodeIdx];
             
             if (episode && episode.servers) {
