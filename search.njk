@@ -1,0 +1,118 @@
+---
+layout: null
+permalink: /search/index.html
+---
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <title>Search Results - Quravel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#498BBB",
+                        "background-dark": "#0B0E19",
+                        "surface-dark": "#151926",
+                        "text-light": "#E5E7EB"
+                    }
+                }
+            }
+        };
+    </script>
+</head>
+<body class="bg-background-dark text-text-light">
+
+    <nav class="p-6 border-b border-gray-800 flex justify-between items-center">
+        <a href="/" class="text-2xl font-bold text-primary">QURAVEL</a>
+        <div class="flex-1 max-w-md mx-10">
+            <input type="text" id="search-page-input" placeholder="Search again..." 
+                   class="w-full bg-surface-dark border border-gray-700 rounded-lg p-3 text-white focus:ring-2 focus:ring-primary outline-none">
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-6 py-10">
+        <h1 class="text-2xl font-bold mb-2">Search Results for: <span id="query-display" class="text-primary"></span></h1>
+        <p id="result-count" class="text-gray-400 mb-8 text-sm"></p>
+
+        <div id="results-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+            </div>
+
+        <div id="no-results" class="hidden text-center py-20">
+            <span class="material-icons text-6xl text-gray-700">search_off</span>
+            <p class="text-xl text-gray-500 mt-4">No shows found matching your search.</p>
+        </div>
+    </main>
+
+    <script>
+        let allMovies = [];
+        const grid = document.getElementById('results-grid');
+        const queryDisplay = document.getElementById('query-display');
+        const countDisplay = document.getElementById('result-count');
+        const searchInput = document.getElementById('search-page-input');
+        const noResults = document.getElementById('no-results');
+
+        // 1. Load the data
+        fetch('/search-data.json')
+            .then(res => res.json())
+            .then(data => {
+                allMovies = data;
+                performSearch(); // Run search as soon as data is ready
+            });
+
+        // 2. The Search Logic
+        function performSearch() {
+            // Get query from URL (?q=keyword)
+            const urlParams = new URLSearchParams(window.location.search);
+            const query = urlParams.get('q') || "";
+            
+            queryDisplay.innerText = `"${query}"`;
+            searchInput.value = query;
+
+            if (!query) return;
+
+            const filtered = allMovies.filter(m => 
+                m.title.toLowerCase().includes(query.toLowerCase()) || 
+                m.genres.some(g => g.toLowerCase().includes(query.toLowerCase()))
+            );
+
+            displayResults(filtered);
+        }
+
+        // 3. Render Results
+        function displayResults(movies) {
+            countDisplay.innerText = `Found ${movies.length} results`;
+            
+            if (movies.length === 0) {
+                grid.innerHTML = "";
+                noResults.classList.remove('hidden');
+                return;
+            }
+
+            noResults.classList.add('hidden');
+            grid.innerHTML = movies.map(m => `
+                <a href="/post/${m.title.replace(/\s+/g, '-').toLowerCase()}/" class="group block">
+                    <div class="relative overflow-hidden rounded-xl aspect-[2/3] mb-3">
+                        <img src="${m.poster}" class="object-cover w-full h-full group-hover:scale-110 transition duration-500">
+                        <div class="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black to-transparent">
+                            <span class="text-[10px] bg-primary px-2 py-0.5 rounded font-bold uppercase">${m.type}</span>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-sm leading-tight group-hover:text-primary transition">${m.title}</h3>
+                    <div class="text-[11px] text-gray-500 mt-1">${m.year} • ${m.rating} ★</div>
+                </a>
+            `).join('');
+        }
+
+        // 4. Update search when typing on this page
+        searchInput.addEventListener('input', (e) => {
+            const newQuery = e.target.value;
+            // Update URL without reloading page
+            window.history.replaceState(null, "", `?q=${newQuery}`);
+            performSearch();
+        });
+    </script>
+</body>
+</html>
