@@ -221,7 +221,7 @@ layout: null
             
             <a class="block text-sm font-medium hover:text-primary py-2 border-b border-gray-100 dark:border-gray-800" href="#">Top IMDB</a>
             <a class="block text-sm font-medium hover:text-primary py-2 border-b border-gray-100 dark:border-gray-800" href="#">Updates</a>
-            <a class="block text-sm font-medium hover:text-primary py-2" href="https://editor.wix.com/wixel-view/forms/7405900275916997729">Sent request</a>
+            <a class="block text-sm font-medium hover:text-primary py-2" href="https://editor.wix.com/wixel-view/forms/7405900275916997729">Sent Request</a>
         </div>
     </div>
 
@@ -340,7 +340,7 @@ layout: null
                     
                     <a class="hover:text-primary transition-colors" href="#">Top IMDB</a>
                     <a class="hover:text-primary transition-colors" href="#">Updates</a>
-                    <a class="hover:text-primary transition-colors" href="https://editor.wix.com/wixel-view/forms/7405900275916997729">Sent request</a>
+                    <a class="hover:text-primary transition-colors" href="https://editor.wix.com/wixel-view/forms/7405900275916997729">Sent Request</a>
                 </nav>
             </div>
             
@@ -393,7 +393,7 @@ layout: null
         <!-- Hero Carousel with 11ty Loop -->
         <div class="container mx-auto px-4 mb-12 relative h-[700px] w-full rounded-2xl overflow-hidden" id="hero-carousel">
             <div class="flex h-full w-full transition-transform duration-500 ease-in-out" id="hero-track">
-                {% set heroItems = posts.posts | getHero %}
+                {% set heroItems = posts | getHero %}
                 {% if heroItems.length > 0 %}
                     {% for item in heroItems %}
                     <div class="carousel-slide w-full h-full relative group">
@@ -511,7 +511,7 @@ layout: null
                 </div>
             </div>
             <div class="flex overflow-x-auto gap-4 pb-4 hide-scrollbar scroll-smooth" id="top-airing-scroll">
-                {% set topAiring = posts.posts | getTopAiring %}
+                {% set topAiring = posts | getTopAiring %}
                 {% if topAiring.length > 0 %}
                     {% for item in topAiring.slice(0, 12) %}
                     <a href="{{ item.watchLink }}" class="flex-shrink-0 w-40 sm:w-48 group snap-start bg-white dark:bg-surface-dark rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
@@ -564,7 +564,7 @@ layout: null
                 </div>
             </div>
             <div class="flex overflow-x-auto gap-4 pb-4 hide-scrollbar scroll-smooth" id="latest-movies-scroll">
-                {% set latestMovies = posts.posts | filterByType("movie") | sortLatest %}
+                {% set latestMovies = posts | filterByType("movie") | sortLatest %}
                 {% if latestMovies.length > 0 %}
                     {% for item in latestMovies.slice(0, 15) %}
                     <a href="{{ item.watchLink }}" class="flex-shrink-0 w-40 sm:w-48 group snap-start bg-white dark:bg-surface-dark rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
@@ -667,7 +667,7 @@ layout: null
                 </div>
             </div>
             <div class="flex overflow-x-auto gap-4 pb-4 hide-scrollbar scroll-smooth" id="anime-scroll">
-                {% set anime = posts.posts | filterByType("anime") | sortLatest %}
+                {% set anime = posts | filterByType("anime") | sortLatest %}
                 {% if anime.length > 0 %}
                     {% for item in anime.slice(0, 12) %}
                     <a href="{{ item.watchLink }}" class="flex-shrink-0 w-40 sm:w-48 group snap-start bg-white dark:bg-surface-dark rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
@@ -720,7 +720,7 @@ layout: null
                 </div>
             </div>
             <div class="flex overflow-x-auto gap-4 pb-4 hide-scrollbar scroll-smooth" id="recommended-scroll">
-                {% set recommended = posts.posts | getRecommended %}
+                {% set recommended = posts | getRecommended %}
                 {% if recommended.length > 0 %}
                     {% for item in recommended.slice(0, 12) %}
                     <a href="{{ item.watchLink }}" class="flex-shrink-0 w-40 sm:w-48 group snap-start bg-white dark:bg-surface-dark rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
@@ -783,249 +783,263 @@ layout: null
             </div>
         </div>
     </footer>
-
+    
     <script>
-        // Mobile Menu Toggle
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            const overlay = document.getElementById('mobile-menu-overlay');
-            menu.classList.toggle('menu-open');
-            overlay.classList.toggle('hidden');
+    // Mobile Menu Toggle
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobile-menu');
+        const overlay = document.getElementById('mobile-menu-overlay');
+        menu.classList.toggle('menu-open');
+        overlay.classList.toggle('hidden');
+    }
+    
+    // Mobile Search Toggle
+    function toggleMobileSearch() {
+        const searchBar = document.getElementById('mobile-search-bar');
+        searchBar.classList.toggle('hidden');
+    }
+    
+    // Mobile Dropdown Accordion
+    function toggleMobileDropdown(id) {
+        const dropdown = document.getElementById(id);
+        dropdown.classList.toggle('hidden');
+        const arrowId = id === 'genre-mobile' ? 'genre-arrow' : 'country-arrow';
+        const arrow = document.getElementById(arrowId);
+        if (dropdown.classList.contains('hidden')) {
+            arrow.style.transform = 'rotate(0deg)';
+        } else {
+            arrow.style.transform = 'rotate(180deg)';
         }
+    }
+    
+    // Hero Carousel Logic
+    let currentSlide = 0;
+    const heroTrack = document.getElementById('hero-track');
+    const slides = document.querySelectorAll('.carousel-slide');
+    
+    function changeSlide(direction) {
+        const totalSlides = slides.length;
+        if (totalSlides === 0) return;
         
-        // Mobile Search Toggle
-        function toggleMobileSearch() {
-            const searchBar = document.getElementById('mobile-search-bar');
-            searchBar.classList.toggle('hidden');
+        currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+        heroTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+        
+        const slideCounterDisplay = document.getElementById('current-slide-display');
+        if(slideCounterDisplay) slideCounterDisplay.innerText = currentSlide + 1;
+    }
+    
+    // Auto-advance slideshow every 5 seconds
+    let slideInterval = setInterval(() => {
+        changeSlide(1);
+    }, 5000);
+    
+    // Pause auto-slide on hover
+    heroTrack.addEventListener('mouseenter', () => clearInterval(slideInterval));
+    heroTrack.addEventListener('mouseleave', () => {
+        slideInterval = setInterval(() => changeSlide(1), 5000);
+    });
+    
+    // Section scrolling
+    function scrollSection(sectionId, amount) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+            section.scrollLeft += amount;
         }
+    }
+    
+    // Local Storage for Heart Icons
+    function getSavedStatus(itemId) {
+        const saved = localStorage.getItem(`quravel_${itemId}`);
+        if (!saved) return { status: 'none', icon: 'favorite' };
         
-        // Mobile Dropdown Accordion
-        function toggleMobileDropdown(id) {
-            const dropdown = document.getElementById(id);
-            dropdown.classList.toggle('hidden');
-            const arrowId = id === 'genre-mobile' ? 'genre-arrow' : 'country-arrow';
-            const arrow = document.getElementById(arrowId);
-            if (dropdown.classList.contains('hidden')) {
-                arrow.style.transform = 'rotate(0deg)';
+        if (saved === 'Favorites') return { status: saved, icon: 'favorite' };
+        return { status: saved, icon: 'bookmark' };
+    }
+    
+    function saveToLocalStorage(itemId, status) {
+        localStorage.setItem(`quravel_${itemId}`, status);
+        
+        // Update the heart icon
+        const heartBtn = document.querySelector(`.heart-btn[data-item-id="${itemId}"]`);
+        if (heartBtn) {
+            const icon = heartBtn.querySelector('span');
+            if (status === 'Favorites') {
+                icon.textContent = 'favorite';
+                icon.style.color = '#ef4444'; // Red color for favorites
             } else {
-                arrow.style.transform = 'rotate(180deg)';
+                icon.textContent = 'bookmark';
+                icon.style.color = '#498BBB'; // Primary color for others
             }
+            
+            // Show feedback
+            const originalText = icon.textContent;
+            icon.textContent = 'check';
+            icon.style.color = '#10b981';
+            setTimeout(() => {
+                icon.textContent = originalText;
+                icon.style.color = status === 'Favorites' ? '#ef4444' : '#498BBB';
+            }, 1000);
         }
         
-        // Hero Carousel Logic
-        let currentSlide = 0;
-        const heroTrack = document.getElementById('hero-track');
-        const slides = document.querySelectorAll('.carousel-slide');
-        
-        function changeSlide(direction) {
-            const totalSlides = slides.length;
-            if (totalSlides === 0) return;
-            
-            currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
-            heroTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
-            
-            const slideCounterDisplay = document.getElementById('current-slide-display');
-            if(slideCounterDisplay) slideCounterDisplay.innerText = currentSlide + 1;
-        }
-        
-        // Auto-advance slideshow every 5 seconds
-        let slideInterval = setInterval(() => {
-            changeSlide(1);
-        }, 5000);
-        
-        // Pause auto-slide on hover
-        heroTrack.addEventListener('mouseenter', () => clearInterval(slideInterval));
-        heroTrack.addEventListener('mouseleave', () => {
-            slideInterval = setInterval(() => changeSlide(1), 5000);
+        console.log(`Saved ${itemId} as: ${status}`);
+    }
+    
+    // Initialize heart icons on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.heart-btn').forEach(btn => {
+            const itemId = btn.getAttribute('data-item-id');
+            const status = getSavedStatus(itemId);
+            const icon = btn.querySelector('span');
+            icon.textContent = status.icon;
+            if (status.status === 'Favorites') {
+                icon.style.color = '#ef4444';
+            } else if (status.status !== 'none') {
+                icon.style.color = '#498BBB';
+            }
         });
+    });
+    
+    // Search functionality
+    let searchData = [];
+    
+    // Load search data from posts
+    document.addEventListener('DOMContentLoaded', () => {
+        // FIXED: Changed from posts.posts to just posts
+        // Convert 11ty posts to search data
+        const posts = {% if posts %}{{ posts | dump | safe }}{% else %}[]{% endif %};
         
-        // Section scrolling
-        function scrollSection(sectionId, amount) {
-            const section = document.getElementById(sectionId);
-            if (section) {
-                section.scrollLeft += amount;
-            }
+        // Check if posts is an array or an object with posts property
+        let postsArray = [];
+        if (Array.isArray(posts)) {
+            postsArray = posts;
+        } else if (posts && posts.posts && Array.isArray(posts.posts)) {
+            postsArray = posts.posts;
+        } else if (posts && Array.isArray(posts)) {
+            postsArray = posts;
         }
         
-        // Local Storage for Heart Icons
-        function getSavedStatus(itemId) {
-            const saved = localStorage.getItem(`quravel_${itemId}`);
-            if (!saved) return { status: 'none', icon: 'favorite' };
-            
-            if (saved === 'Favorites') return { status: saved, icon: 'favorite' };
-            return { status: saved, icon: 'bookmark' };
-        }
+        searchData = postsArray.map(post => ({
+            id: post.id || post.title?.replace(/\s+/g, '-').toLowerCase() || 'no-id',
+            title: post.title || 'Untitled',
+            type: post.type || 'movie',
+            year: post.year || '2023',
+            rating: post.rating || 'N/A',
+            duration: post.duration || 'N/A',
+            genres: post.genres || [],
+            poster: post.poster || 'https://via.placeholder.com/48x64?text=No+Image',
+            watchLink: post.watchLink || '#'
+        }));
         
-        function saveToLocalStorage(itemId, status) {
-            localStorage.setItem(`quravel_${itemId}`, status);
-            
-            // Update the heart icon
-            const heartBtn = document.querySelector(`.heart-btn[data-item-id="${itemId}"]`);
-            if (heartBtn) {
-                const icon = heartBtn.querySelector('span');
-                if (status === 'Favorites') {
-                    icon.textContent = 'favorite';
-                    icon.style.color = '#ef4444'; // Red color for favorites
-                } else {
-                    icon.textContent = 'bookmark';
-                    icon.style.color = '#498BBB'; // Primary color for others
-                }
-                
-                // Show feedback
-                const originalText = icon.textContent;
-                icon.textContent = 'check';
-                icon.style.color = '#10b981';
-                setTimeout(() => {
-                    icon.textContent = originalText;
-                    icon.style.color = status === 'Favorites' ? '#ef4444' : '#498BBB';
-                }, 1000);
-            }
-            
-            console.log(`Saved ${itemId} as: ${status}`);
-        }
+        console.log(`Loaded ${searchData.length} items for search`);
         
-        // Initialize heart icons on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.heart-btn').forEach(btn => {
-                const itemId = btn.getAttribute('data-item-id');
-                const status = getSavedStatus(itemId);
-                const icon = btn.querySelector('span');
-                icon.textContent = status.icon;
-                if (status.status === 'Favorites') {
-                    icon.style.color = '#ef4444';
-                } else if (status.status !== 'none') {
-                    icon.style.color = '#498BBB';
+        // Setup search for desktop
+        const desktopSearch = document.getElementById('main-search');
+        const desktopSuggestions = document.getElementById('search-suggestions');
+        const desktopList = document.getElementById('suggestions-list');
+        
+        if(desktopSearch) {
+            desktopSearch.addEventListener('input', (e) => handleSearchInput(e, desktopList, desktopSuggestions, 'desktop'));
+            desktopSearch.addEventListener('focus', () => {
+                if(desktopSearch.value.length >= 2) {
+                    desktopSuggestions.classList.remove('hidden');
                 }
             });
-        });
+        }
         
-        // Search functionality
-        let searchData = [];
+        // Setup search for mobile
+        const mobileSearch = document.getElementById('mobile-search');
+        const mobileSuggestions = document.getElementById('mobile-search-suggestions');
+        const mobileList = document.getElementById('mobile-suggestions-list');
         
-        // Load search data from posts
-        document.addEventListener('DOMContentLoaded', () => {
-            // Convert 11ty posts to search data
-            const posts = {% if posts.posts %}{{ posts.posts | dump | safe }}{% else %}[]{% endif %};
-            searchData = posts.map(post => ({
-                id: post.id,
-                title: post.title,
-                type: post.type,
-                year: post.year,
-                rating: post.rating,
-                duration: post.duration,
-                genres: post.genres || [],
-                poster: post.poster,
-                watchLink: post.watchLink
-            }));
-            
-            // Setup search for desktop
-            const desktopSearch = document.getElementById('main-search');
-            const desktopSuggestions = document.getElementById('search-suggestions');
-            const desktopList = document.getElementById('suggestions-list');
-            
-            if(desktopSearch) {
-                desktopSearch.addEventListener('input', (e) => handleSearchInput(e, desktopList, desktopSuggestions, 'desktop'));
-                desktopSearch.addEventListener('focus', () => {
-                    if(desktopSearch.value.length >= 2) {
-                        desktopSuggestions.classList.remove('hidden');
-                    }
-                });
-            }
-            
-            // Setup search for mobile
-            const mobileSearch = document.getElementById('mobile-search');
-            const mobileSuggestions = document.getElementById('mobile-search-suggestions');
-            const mobileList = document.getElementById('mobile-suggestions-list');
-            
-            if(mobileSearch) {
-                mobileSearch.addEventListener('input', (e) => handleSearchInput(e, mobileList, mobileSuggestions, 'mobile'));
-                mobileSearch.addEventListener('focus', () => {
-                    if(mobileSearch.value.length >= 2) {
-                        mobileSuggestions.classList.remove('hidden');
-                    }
-                });
-            }
-            
-            // Close suggestions when clicking outside
-            document.addEventListener('click', (e) => {
-                if(desktopSearch && !desktopSearch.contains(e.target) && desktopSuggestions && !desktopSuggestions.contains(e.target)) {
-                    desktopSuggestions.classList.add('hidden');
-                }
-                if(mobileSearch && !mobileSearch.contains(e.target) && mobileSuggestions && !mobileSuggestions.contains(e.target)) {
-                    mobileSuggestions.classList.add('hidden');
+        if(mobileSearch) {
+            mobileSearch.addEventListener('input', (e) => handleSearchInput(e, mobileList, mobileSuggestions, 'mobile'));
+            mobileSearch.addEventListener('focus', () => {
+                if(mobileSearch.value.length >= 2) {
+                    mobileSuggestions.classList.remove('hidden');
                 }
             });
-        });
+        }
         
-        function handleSearchInput(e, listElement, suggestionsElement, type) {
-            const val = e.target.value.trim();
-            
-            if (val.length < 2) {
-                suggestionsElement.classList.add('hidden');
-                return;
+        // Close suggestions when clicking outside
+        document.addEventListener('click', (e) => {
+            if(desktopSearch && !desktopSearch.contains(e.target) && desktopSuggestions && !desktopSuggestions.contains(e.target)) {
+                desktopSuggestions.classList.add('hidden');
             }
+            if(mobileSearch && !mobileSearch.contains(e.target) && mobileSuggestions && !mobileSuggestions.contains(e.target)) {
+                mobileSuggestions.classList.add('hidden');
+            }
+        });
+    });
+    
+    function handleSearchInput(e, listElement, suggestionsElement, type) {
+        const val = e.target.value.trim();
+        
+        if (val.length < 2) {
+            suggestionsElement.classList.add('hidden');
+            return;
+        }
 
-            // Update the "View All Results" button URL
-            const viewAllBtn = type === 'desktop' 
-                ? document.getElementById('view-all-btn') 
-                : document.getElementById('mobile-view-all-btn');
-            
-            if (viewAllBtn) {
-                viewAllBtn.href = `/search/?q=${encodeURIComponent(val)}`;
-            }
+        // Update the "View All Results" button URL
+        const viewAllBtn = type === 'desktop' 
+            ? document.getElementById('view-all-btn') 
+            : document.getElementById('mobile-view-all-btn');
+        
+        if (viewAllBtn) {
+            viewAllBtn.href = `/search/?q=${encodeURIComponent(val)}`;
+        }
 
-            const searchVal = val.toLowerCase();
-            const results = searchData.filter(m => {
-                if (!m || !m.title) return false;
-                return m.title.toLowerCase().includes(searchVal) || 
-                       (m.genres && m.genres.some(g => g && g.toLowerCase().includes(searchVal)));
-            }).slice(0, 8);
-            
-            if(results.length === 0) {
-                listElement.innerHTML = `
-                    <div class="p-4 text-center text-gray-400">
-                        No results found for "${val}"
-                    </div>
-                `;
-                suggestionsElement.classList.remove('hidden');
-                return;
-            }
-            
-            // Fixed: Use matching slugify logic for URLs
-            listElement.innerHTML = results.map(m => {
-                // IMPORTANT: Use the exact same slug logic as in .eleventy.js
-                const slug = m.title
-                    .toLowerCase()                  // Convert to lowercase
-                    .replace(/\s+/g, '-')           // Replace spaces with -
-                    .replace(/[^\w\-]+/g, '')       // Remove all non-word chars (fixes :, !, etc.)
-                    .replace(/\-\-+/g, '-')         // Replace multiple - with single -
-                    .replace(/^-+/, '')             // Trim - from start
-                    .replace(/-+$/, '');            // Trim - from end
-                
-                // Use the slug in the URL - adjust path based on your actual URL structure
-                // IMPORTANT: Make sure this matches your permalink structure in streaming.njk
-                // If streaming.njk uses /watch/{{ post.title | slugify }}/ then use:
-                const url = `/watch/${slug}/`;
-                
-                return `
-                <a href="${url}" class="flex items-center p-3 hover:bg-gray-800 cursor-pointer border-b border-gray-700">
-                    <img src="${m.poster}" class="w-12 h-16 object-cover rounded mr-4" alt="${m.title}" onerror="this.src='https://via.placeholder.com/48x64?text=No+Image'">
-                    <div class="flex-1 min-w-0">
-                        <div class="font-semibold text-white truncate">${m.title}</div>
-                        <div class="text-xs text-gray-400 mt-1">
-                            ${m.type ? m.type.toUpperCase() : 'MOVIE'} • 
-                            ${m.genres ? m.genres.slice(0, 2).join(', ') : 'N/A'} • 
-                            ${m.year || 'N/A'} • 
-                            ${m.duration || 'N/A'}
-                        </div>
-                    </div>
-                    <span class="material-symbols-outlined text-gray-600 text-sm">chevron_right</span>
-                </a>
-                `;
-            }).join('');
-            
+        const searchVal = val.toLowerCase();
+        const results = searchData.filter(m => {
+            if (!m || !m.title) return false;
+            return m.title.toLowerCase().includes(searchVal) || 
+                   (m.genres && m.genres.some(g => g && g.toLowerCase().includes(searchVal)));
+        }).slice(0, 8);
+        
+        if(results.length === 0) {
+            listElement.innerHTML = `
+                <div class="p-4 text-center text-gray-400">
+                    No results found for "${val}"
+                </div>
+            `;
             suggestionsElement.classList.remove('hidden');
+            return;
         }
-    </script>
+        
+        // Fixed: Use matching slugify logic for URLs
+        listElement.innerHTML = results.map(m => {
+            // IMPORTANT: Use the exact same slug logic as in .eleventy.js
+            const slug = m.title
+                .toLowerCase()                  // Convert to lowercase
+                .replace(/\s+/g, '-')           // Replace spaces with -
+                .replace(/[^\w\-]+/g, '')       // Remove all non-word chars (fixes :, !, etc.)
+                .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+                .replace(/^-+/, '')             // Trim - from start
+                .replace(/-+$/, '');            // Trim - from end
+            
+            // Use the slug in the URL - adjust path based on your actual URL structure
+            // IMPORTANT: Make sure this matches your permalink structure in streaming.njk
+            // If streaming.njk uses /watch/{{ post.title | slugify }}/ then use:
+            const url = `/watch/${slug}/`;
+            
+            return `
+            <a href="${url}" class="flex items-center p-3 hover:bg-gray-800 cursor-pointer border-b border-gray-700">
+                <img src="${m.poster}" class="w-12 h-16 object-cover rounded mr-4" alt="${m.title}" onerror="this.src='https://via.placeholder.com/48x64?text=No+Image'">
+                <div class="flex-1 min-w-0">
+                    <div class="font-semibold text-white truncate">${m.title}</div>
+                    <div class="text-xs text-gray-400 mt-1">
+                        ${m.type ? m.type.toUpperCase() : 'MOVIE'} • 
+                        ${m.genres ? m.genres.slice(0, 2).join(', ') : 'N/A'} • 
+                        ${m.year || 'N/A'} • 
+                        ${m.duration || 'N/A'}
+                    </div>
+                </div>
+                <span class="material-symbols-outlined text-gray-600 text-sm">chevron_right</span>
+            </a>
+            `;
+        }).join('');
+        
+        suggestionsElement.classList.remove('hidden');
+    }
+</script>
 </body>
 </html>
