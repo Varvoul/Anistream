@@ -1,0 +1,73 @@
+// .eleventy.js
+const fs = require('fs');
+const path = require('path');
+
+module.exports = function(eleventyConfig) {
+  // --- ASSETS & FILTERS ---
+  eleventyConfig.addPassthroughCopy("src/css");
+  eleventyConfig.addPassthroughCopy("src/js");
+  eleventyConfig.addPassthroughCopy("src/images");
+
+  eleventyConfig.addFilter("slugify", function(str) {
+    if (!str) return '';
+    return str.toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '').replace(/\-\-+/g, '-').replace(/^-+/, '').replace(/-+$/, '');
+  });
+
+  eleventyConfig.addFilter("getHero", (posts) => (posts || []).filter(i => i.featured).slice(0, 5));
+  
+  eleventyConfig.addFilter("filterByType", (posts, type) => (posts || []).filter(i => i.type === type));
+
+  eleventyConfig.addFilter("truncate", (str, len = 200) => (str && str.length > len) ? str.substring(0, len) + '...' : str);
+
+  eleventyConfig.addFilter("json", (obj) => JSON.stringify(obj));
+
+  eleventyConfig.addFilter("getWatchLink", function(item) {
+    if (!item || !item.title) return "#";
+    return `/watch/${eleventyConfig.getFilter("slugify")(item.title)}/`;
+  });
+
+  // --- DATA TRANSFORMATION LOGIC ---
+  // We define a helper to load the JSON once to avoid repeating code
+  const getRawPosts = () => {
+    try {
+      const postsPath = path.join(__dirname, 'src/_data/posts.json');
+      const postsData = JSON.parse(fs.readFileSync(postsPath, 'utf8'));
+      // This fix handles BOTH [{},{}] and {"posts": [{},{}]}
+      const postsArray = Array.isArray(postsData) ? postsData : (postsData.posts || []);
+      
+      // Map the watchLink here so it's available everywhere automatically
+      return postsArray.map(item => ({
+        ...item,
+        watchLink: `/watch/${item.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '')}/`
+      }));
+    } catch (e) {
+      console.error("Error loading posts.json:", e);
+      return [];
+    }
+  };
+
+  // --- GLOBAL DATA ---
+  // This makes {{ posts }} available in all your Nunjucks templates
+  eleventyConfig.addGlobalData("posts", getRawPosts);
+
+  // --- COLLECTIONS ---
+  eleventyConfig.addCollection("popularShows", () => {
+    return getRawPosts().sort((a, b) => (b.views || 0) - (a.views || 0)).slice(0, 5);
+  });
+
+  eleventyConfig.addCollection("recommendedShows", () => {
+    return getRawPosts().sort((a, b) => (b.popularity || 0) - (a.popularity || 0)).slice(0, 12);
+  });
+
+  return {
+    dir: {
+      input: "src",
+      output: "_site",
+      includes: "_includes",
+      data: "_data"
+    },
+    templateFormats: ["njk", "md", "html"],
+    htmlTemplateEngine: "njk",
+    dataTemplateEngine: "njk"
+  };
+};
