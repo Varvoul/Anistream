@@ -1,11 +1,21 @@
 {
   "name": "quravel-streaming",
   "version": "1.0.0",
+  "description": "Movie streaming website automated with 11ty and Bitbucket Pipelines",
+  "main": "index.js",
   "scripts": {
-    "build": "eleventy",
-    "dev": "eleventy --serve",
+    "build": "npx @11ty/eleventy --input=src --output=_site",
+    "start": "npx @11ty/eleventy --serve --input=src",
+    "debug": "DEBUG=Eleventy* npx @11ty/eleventy --input=src",
     "clean": "rm -rf _site"
   },
+  "keywords": [
+    "11ty",
+    "streaming",
+    "eleventy"
+  ],
+  "author": "Naoshi",
+  "license": "ISC",
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0",
     "slugify": "^1.6.6"
